@@ -327,4 +327,5 @@ def run(filepath_noextextenion):
 
     print("--- %s seconds ---" % (time.time() - start_time))
 
-run("test cases/small/test_10_equal")
+    map.map('solution.csv')
+

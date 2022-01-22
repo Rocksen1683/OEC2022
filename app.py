@@ -33,8 +33,8 @@ evaluate.place(x=100, y=180)
 
 
 def show_answer():
-    qor = validator.validator(filename.get()+".csv",
-                              "solution.csv", w1label.get(), w2label.get())
+    qor = validator.validator(filename.get(),
+                              "solution.csv", weight1.get(), weight2.get())
     qorE = Label(root,  text="%s" % (qor))
     qorE.place(0, 260)
 
