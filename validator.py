@@ -73,8 +73,8 @@ def validator(map_file, solution_file, a, b):
         #print("current path node info: ",path_nodes[i])
 
         cur_type = map_nodes[cur_id][3]
-        cur_weight = float(map_nodes[cur_id][-1].strip("\n"))
-        cur_loss = float(map_nodes[cur_id][4])
+        cur_loss = float(map_nodes[cur_id][-1].strip("\n"))
+        cur_weight = float(map_nodes[cur_id][4])
         cur_loc = (map_nodes[cur_id][1],map_nodes[cur_id][2])
 
         if cur_id in waste_nodes:
