@@ -3,14 +3,12 @@ import geopandas
 import folium
 import webbrowser
 import matplotlib.pyplot as plot
-from folium.plugins import FloatImage
+
 
 def map(file_name):
 
     data = pandas.read_csv(file_name)
     data.columns = ['Index', 'Latitude', 'Longitude', 'Type', 'Quantity', 'Loss']
-    # columns_dropped = ['Index', 'Quantity', 'Loss']
-    # data.drop(columns_dropped, inplace=True, axis=1)
 
     geometry = geopandas.points_from_xy(data.Longitude, data.Latitude)
     geodata = geopandas.GeoDataFrame(data[['Latitude', 'Longitude', 'Type', 'Quantity', 'Loss', 'Index']], geometry=geometry)
@@ -21,7 +19,6 @@ def map(file_name):
     figure, axis = plot.subplots(figsize=(10,8))
     map.plot(ax=axis, alpha=0.4, color='grey')
     geodata.plot(column='Type', ax=axis, legend=True)
-    plot.title('Waste Cleaning')
 
     graph = folium.Map(location = [0.000, 0.000], tiles='Stamen Terrain', zoom_start = 2)
 
@@ -81,5 +78,3 @@ def map(file_name):
 
     graph.save("map.html")
     webbrowser.open("map.html")
-
-map('test cases/medium/test_1000_equal.csv')
