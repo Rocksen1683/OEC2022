@@ -8,7 +8,7 @@ def show_answer():
     qor = validator.validator(filename.get()+".csv",
                               "solution.csv", w1label.get(), w2label.get())
     qorE = Label(root,  text="%s" % (qor))
-    qor.place(0, 260)
+    qorE.place(0, 260)
 
 
 w = Canvas(root, width=300, height=300)
