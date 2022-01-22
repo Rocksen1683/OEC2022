@@ -4,13 +4,6 @@ import validator
 root = Tk()
 
 
-def show_answer():
-    qor = validator.validator(filename.get()+".csv",
-                              "solution.csv", w1label.get(), w2label.get())
-    qorE = Label(root,  text="%s" % (qor))
-    qorE.place(0, 260)
-
-
 w = Canvas(root, width=300, height=300)
 w.pack()
 
@@ -37,6 +30,14 @@ weight2.place(x=0, y=140)
 evaluate = Button(root, text="Evaluate",
                   command=lambda: find_path.run(filename.get()))
 evaluate.place(x=100, y=180)
+
+
+def show_answer():
+    qor = validator.validator(filename.get()+".csv",
+                              "solution.csv", w1label.get(), w2label.get())
+    qorE = Label(root,  text="%s" % (qor))
+    qorE.place(0, 260)
+
 
 qor = Label(root, text="Quality of Result is: ")
 qor.place(x=0, y=220)
