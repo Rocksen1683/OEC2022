@@ -36,7 +36,7 @@ Enter the following commands in the Linux/Unix/Bash Terminal to install the foll
 
 Now enter the following commands:
 
-```python3 ./main.py```
+```python3 ./app.py```
 
 This will show your Quality of Results. Now to generate the map, run the following command:
 
