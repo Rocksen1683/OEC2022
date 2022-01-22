@@ -73,8 +73,8 @@ def validator(map_file, solution_file, a, b):
         #print("current path node info: ",path_nodes[i])
 
         cur_type = map_nodes[cur_id][3]
-        cur_loss = float(map_nodes[cur_id][-1].strip("\n"))
-        cur_weight = float(map_nodes[cur_id][4])
+        cur_weight = float(map_nodes[cur_id][4].strip("\n"))
+        cur_loss = float(map_nodes[cur_id][-1])
         cur_loc = (map_nodes[cur_id][1],map_nodes[cur_id][2])
 
         if cur_id in waste_nodes:
@@ -93,9 +93,10 @@ def validator(map_file, solution_file, a, b):
                 for node in processed_nodes:
                     #print("node info: ",node)
 
-                    total_loss += node[3] * cur_loss * distance
+                    if node[3] > 0:
+                        total_loss += node[3] * cur_loss * distance
                     # update the weights at each node
-                    node[3] -= node[3] * cur_loss * distance
+                    node[3] = max(0, (node[3] - node[3] * cur_loss * distance))
                     node_label = node[1]
                     #print("node label: ",node_label," & current type: ",cur_type)
 
