@@ -1,6 +1,14 @@
 from tkinter import *
-
+import find_path
+import validator
 root = Tk()
+
+
+def show_answer():
+    qor = validator.validator(filename.get()+".csv",
+                              "solution.csv", w1label.get(), w2label.get())
+    qorE = Label(root,  text="%s" % (qor))
+    qor.place(0, 260)
 
 
 w = Canvas(root, width=300, height=300)
@@ -26,14 +34,16 @@ w2label.place(x=0, y=120)
 weight2 = Entry(root, width=40)
 weight2.place(x=0, y=140)
 
-evaluate = Button(root, text="Evaluate")
+evaluate = Button(root, text="Evaluate",
+                  command=lambda: find_path.run(filename.get()))
 evaluate.place(x=100, y=180)
 
 qor = Label(root, text="Quality of Result is: ")
 qor.place(x=0, y=220)
 
-qorEntry = Entry(root, width=40)
-qorEntry.place(x=0, y=240)
+qorEntry = Button(root, text="Show",
+                  command=show_answer)
+qorEntry.place(x=100, y=240)
 
 
 root.mainloop()
