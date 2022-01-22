@@ -1,6 +1,8 @@
 from dis import dis
+from lib2to3.pytree import Node
 import math
 import time
+from tkinter.messagebox import NO
 from turtle import st
 import csv
 from typing import final
@@ -144,11 +146,15 @@ def deplete_square(hashStr, init_pos, total_dist, out):
             total_dist = total_dist + dist
             final_node = node
             out.writerow(node)
+    if final_node == None:
+        final_node = grid[hashStr][0]
     return total_dist, final_node
 
 
 #CALCULATION OF FACILITIES
 def pseudoQoR(ls, prevNode):
+    #print('-->',ls)
+    #print('-->',prevNode)
     dist = abs(get_delta_distance( (ls[1],ls[2]) , (prevNode[1],prevNode[2]) ))
     return dist + (ls[-1] * dist * 1000)
 
@@ -244,26 +250,35 @@ def find_triplet(waste_node, out):
 
 def collect_waste(out):
     grid_stats = make_grid(step=0.0125)
-    #printListNormal((list(grid.keys())))
+    #printListNormal((list(grid.values())))
     #printListNormal(grid_sq_coords)
-    print(len(list(grid.keys())))
-    print(len(grid_sq_coords))
+    #print(len(list(grid.keys())))
+    #print(len(grid_sq_coords))
     total_dist = 0
 
+    final_node = None
     waste_node = facilities['waste'][0]
     hash = grid_hasher(waste_node, grid_stats)
     while len(grid.keys()) > 1:
-        #print("Working on hash: " + hash)
-        total_dist, last = (deplete_square(hash, (grid[hash][0][1],grid[hash][0][2]), total_dist , out))
+        print("Working on hash: " + hash)
+        if final_node == None:
+            out.writerow(grid[hash][0])
+            total_dist, last = (deplete_square(hash, (grid[hash][0][1],grid[hash][0][2]), total_dist , out))
+        else:
+            total_dist, last = (deplete_square(hash, (final_node[1],final_node[2]), total_dist , out))
+        print("-----------last: ", last)
         #hash_coords = (tuple(hash.split('|')))
-
+        if last != None:
+            final_node = last
         #grid_sq_coords.remove( ( float(hash_coords[0]) , float(hash_coords[1]) ) )
         del grid[hash]
         #print("-->Finding sq next to {}".format(hash))
         hash = nearest_square(hash, grid_stats)
         #print("-->Found sq at  {}".format(hash))
 
-    total_dist, final_node = (deplete_square(hash, (grid[hash][0][1],grid[hash][0][2]), total_dist , out))
+    total_dist, final_node = (deplete_square(hash, (final_node[1],final_node[2]), total_dist , out))
+    if last != None:
+        final_node = last
     del grid[hash]
 
     print(total_dist)
@@ -282,8 +297,12 @@ def run(filepath_noextextenion):
 
     last_node = collect_waste(out)
 
+    print('!!!--',last_node)
+
     find_triplet(last_node, out)
 
     f.close()
 
     print("--- %s seconds ---" % (time.time() - start_time))
+
+run("test cases/small/test_10_equal")
